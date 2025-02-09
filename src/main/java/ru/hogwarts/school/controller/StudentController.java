@@ -5,6 +5,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
+import java.text.CollationKey;
+import java.util.Collection;
+
 @RestController
 @RequestMapping("/students")
 public class StudentController {
@@ -18,6 +21,11 @@ public class StudentController {
     @PostMapping
     public Student addStudent(@RequestBody Student student) {
         return studentService.addStudent(student);
+    }
+
+    @GetMapping
+    public ResponseEntity<Collection<Student>> getAllStudents() {
+        return ResponseEntity.ok(studentService.getAllStudents());
     }
 
     @GetMapping("/{id}")
