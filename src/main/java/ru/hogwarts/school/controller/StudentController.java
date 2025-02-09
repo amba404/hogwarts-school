@@ -29,31 +29,19 @@ public class StudentController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Student> getStudent(@PathVariable Long id) {
-        Student student = studentService.getStudent(id);
-        if (student == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(student);
+        return ResponseEntity.ok(studentService.getStudent(id));
     }
 
     @PutMapping
     public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
         Student student1 = studentService.getStudent(student.getId());
-        if (student1 == null) {
-            return ResponseEntity.badRequest().build();
-        }
 
-        return ResponseEntity.ok(studentService.updateStudent(student));
+        return ResponseEntity.ok(studentService.updateStudent(student1));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Student> deleteStudent(@PathVariable Long id) {
-        Student student = studentService.getStudent(id);
-        if (student == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(studentService.deleteStudent(id));
+         return ResponseEntity.ok(studentService.deleteStudent(id));
     }
 
     @GetMapping("/find/age/{age}")

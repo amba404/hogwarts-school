@@ -1,6 +1,7 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.exception.NotFoundException;
 import ru.hogwarts.school.model.Student;
 
 import java.util.Collection;
@@ -21,21 +22,24 @@ public class StudentService {
     }
 
     public Student getStudent(long id) {
+        checkExistsId(id);
         return students.get(id);
     }
 
     public Student updateStudent(Student student) {
-        if (!students.containsKey(student.getId())) {
-            return null;
-        }
+        checkExistsId(student.getId());
         return students.put(student.getId(), student);
     }
 
     public Student deleteStudent(long id) {
-        if (!students.containsKey(id)) {
-            return null;
-        }
+        checkExistsId(id);
         return students.remove(id);
+    }
+
+    private void checkExistsId(long id) {
+        if (!students.containsKey(id)) {
+            throw new NotFoundException("Student with id " + id + " not found");
+        }
     }
 
     public Collection<Student> getAllStudents() {
