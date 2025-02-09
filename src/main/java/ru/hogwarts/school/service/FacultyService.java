@@ -5,6 +5,7 @@ import ru.hogwarts.school.model.Faculty;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class FacultyService {
@@ -24,14 +25,14 @@ public class FacultyService {
     }
 
     public Faculty updateFaculty(Faculty faculty) {
-        if (!faculties.containsKey(faculty.getId())){
+        if (!faculties.containsKey(faculty.getId())) {
             return null;
         }
-        return faculties.put(faculty.getId(), faculty)  ;
+        return faculties.put(faculty.getId(), faculty);
     }
 
     public Faculty deleteFaculty(long id) {
-        if (!faculties.containsKey(id)){
+        if (!faculties.containsKey(id)) {
             return null;
         }
         return faculties.remove(id);
@@ -41,7 +42,7 @@ public class FacultyService {
         return faculties.values();
     }
 
-    public Collection<Faculty> findFacultiesByColor(String color) {
+    public List<Faculty> findFacultiesByColor(String color) {
         return faculties.values().stream()
                 .filter(faculty -> faculty.getColor().equals(color))
                 .collect(java.util.stream.Collectors.toList());
