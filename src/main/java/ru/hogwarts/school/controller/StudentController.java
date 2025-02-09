@@ -9,7 +9,7 @@ import java.text.CollationKey;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/students")
+@RequestMapping("/student")
 public class StudentController {
 
     private final StudentService studentService;
@@ -23,7 +23,7 @@ public class StudentController {
         return studentService.addStudent(student);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<Collection<Student>> getAllStudents() {
         return ResponseEntity.ok(studentService.getAllStudents());
     }
