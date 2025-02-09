@@ -40,4 +40,10 @@ public class FacultyService {
     public Collection<Faculty> getAllFaculties() {
         return faculties.values();
     }
+
+    public Collection<Faculty> findFacultiesByColor(String color) {
+        return faculties.values().stream()
+                .filter(faculty -> faculty.getColor().equals(color))
+                .collect(java.util.stream.Collectors.toList());
+    }
 }

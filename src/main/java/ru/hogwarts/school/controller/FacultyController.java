@@ -55,4 +55,9 @@ public class FacultyController {
         }
         return ResponseEntity.ok(facultyService.deleteFaculty(id));
     }
+
+    @GetMapping("/find/color/{color}")
+    public ResponseEntity<Collection<Faculty>> findFacultiesByColor(@PathVariable String color) {
+        return ResponseEntity.ok(facultyService.findFacultiesByColor(color));
+    }
 }
