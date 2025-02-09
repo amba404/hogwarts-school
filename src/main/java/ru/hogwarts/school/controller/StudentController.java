@@ -56,4 +56,10 @@ public class StudentController {
         }
         return ResponseEntity.ok(studentService.deleteStudent(id));
     }
+
+    @GetMapping("/find/age/{age}")
+    public ResponseEntity<Collection<Student>> findStudentsByAge(@PathVariable int age) {
+        return ResponseEntity.ok(studentService.findStudentsByAge(age));
+    }
+
 }

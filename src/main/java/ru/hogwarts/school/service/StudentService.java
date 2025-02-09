@@ -40,4 +40,10 @@ public class StudentService {
     public Collection<Student> getAllStudents() {
         return students.values();
     }
+
+    public Collection<Student> findStudentsByAge(int age) {
+       return students.values().stream()
+               .filter(student -> student.getAge() == age)
+               .collect(java.util.stream.Collectors.toList());
+    }
 }
