@@ -1,4 +1,4 @@
-package ru.hogwarts.school.exception;
+package ru.hogwarts.school.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

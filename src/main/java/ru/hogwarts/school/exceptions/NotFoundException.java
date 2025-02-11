@@ -1,4 +1,4 @@
-package ru.hogwarts.school.exception;
+package ru.hogwarts.school.exceptions;
 
 public class NotFoundException extends RuntimeException{
     public NotFoundException(String message) {

@@ -1,9 +1,9 @@
-package ru.hogwarts.school.controller;
+package ru.hogwarts.school.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.hogwarts.school.model.Student;
-import ru.hogwarts.school.service.StudentService;
+import ru.hogwarts.school.models.Student;
+import ru.hogwarts.school.services.StudentService;
 
 import java.util.Collection;
 
@@ -32,11 +32,10 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getStudent(id));
     }
 
-    @PutMapping
-    public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
-        Student student1 = studentService.getStudent(student.getId());
-
-        return ResponseEntity.ok(studentService.updateStudent(student1));
+    @PutMapping("/{id}")
+    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student student) {
+        student.setId(id);
+         return ResponseEntity.ok(studentService.updateStudent(student));
     }
 
     @DeleteMapping("/{id}")
