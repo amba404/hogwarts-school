@@ -35,12 +35,12 @@ public class StudentController {
     @PutMapping("/{id}")
     public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student student) {
         student.setId(id);
-         return ResponseEntity.ok(studentService.updateStudent(student));
+        return ResponseEntity.ok(studentService.updateStudent(student));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Student> deleteStudent(@PathVariable Long id) {
-         return ResponseEntity.ok(studentService.deleteStudent(id));
+        return ResponseEntity.ok(studentService.deleteStudent(id));
     }
 
     @GetMapping("/find/age/{age}")

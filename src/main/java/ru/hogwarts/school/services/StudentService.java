@@ -38,7 +38,7 @@ public class StudentService {
     }
 
     private void checkExistsId(long id) {
-        if (!students.existsById(id))  {
+        if (!students.existsById(id)) {
             throw new NotFoundException("Student with id " + id + " not found");
         }
     }

@@ -23,17 +23,15 @@ import static org.mockito.Mockito.*;
 @MockitoSettings(strictness = Strictness.LENIENT)
 public class StudentServiceTest {
 
+    private final Long notFoundId = 111111L;
     @Mock
     private StudentRepository studentRepository;
-
     @InjectMocks
     private StudentService studentService;
-
     private Student student1, student2;
-    private final Long notFoundId = 111111L;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         student1 = new Student(1L, "Ivan", 10);
         student2 = new Student(2L, "Petr", 10);
 
