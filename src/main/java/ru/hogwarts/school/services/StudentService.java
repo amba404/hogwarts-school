@@ -18,7 +18,8 @@ public class StudentService {
     }
 
     public Student addStudent(Student student) {
-        return students.save(student);
+        students.save(student);
+        return getStudent(student.getId());
     }
 
     public Student getStudent(long id) {
@@ -49,5 +50,13 @@ public class StudentService {
 
     public List<Student> findStudentsByAge(int age) {
         return students.findByAge(age);
+    }
+
+    public List<Student> findStudentsByAge(int min, int max) {
+        return students.findByAgeBetween(min, max);
+    }
+
+    public Collection<Student> findStudentsByFacultyId(Long facultyId) {
+        return students.findStudentsByFacultyId(facultyId);
     }
 }
