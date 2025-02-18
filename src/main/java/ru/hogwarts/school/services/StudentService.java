@@ -24,7 +24,7 @@ public class StudentService {
 
     public Student getStudent(long id) {
         checkExistsId(id);
-        return students.findById(id).get();
+        return students.findById(id).orElseThrow(() -> new NotFoundException("Student with id " + id + " not found"));
     }
 
     public Student updateStudent(Student student) {
@@ -38,7 +38,7 @@ public class StudentService {
         return student;
     }
 
-    private void checkExistsId(long id) {
+    public void checkExistsId(long id) {
         if (!students.existsById(id)) {
             throw new NotFoundException("Student with id " + id + " not found");
         }
