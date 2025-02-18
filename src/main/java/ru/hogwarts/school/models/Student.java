@@ -15,7 +15,6 @@ import lombok.*;
 @Entity
 public class Student {
 
-    //@JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Id
     @GeneratedValue
     private Long id;
@@ -30,7 +29,6 @@ public class Student {
     @NotNull(message = "Факультет должен быть заполнен")
     @ManyToOne(targetEntity = Faculty.class)
     @JoinColumn(name = "faculty_id", nullable = false)
-//    @JsonManagedReference
     private Faculty faculty;
 
 }

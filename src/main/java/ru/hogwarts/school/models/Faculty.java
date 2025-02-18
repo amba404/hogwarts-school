@@ -13,14 +13,9 @@ import java.util.Set;
 
 @Setter
 @Getter
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@EqualsAndHashCode
-//@ToString
 @Entity
 public class Faculty {
 
-    //@JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Id
     @GeneratedValue
     private Long id;
@@ -33,7 +28,6 @@ public class Faculty {
 
     @JsonProperty(required = true)
     @OneToMany(mappedBy = "faculty", fetch = FetchType.LAZY)
-//    @JsonBackReference
     @JsonIgnore
     private Collection<Student> students;
 
