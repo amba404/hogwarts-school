@@ -86,8 +86,8 @@ public class StudentController {
         if (avatar.getSize() > 300 * 1024) {
             ResponseEntity.badRequest().body("File is too big");
         }
-        avatarService.uploadAvatar(studentId, avatar);
-        return ResponseEntity.ok().build();
+        Long avatarId = avatarService.uploadAvatar(studentId, avatar);
+        return ResponseEntity.ok().body(String.valueOf(avatarId));
     }
 
     @GetMapping(value = "/{id}/avatar/from-db")

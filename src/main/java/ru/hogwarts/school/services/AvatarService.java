@@ -29,7 +29,7 @@ public class AvatarService {
         this.studentService = studentService;
     }
 
-    public void uploadAvatar(Long studentId, @NotNull MultipartFile avatarFile) throws IOException {
+    public Long uploadAvatar(Long studentId, @NotNull MultipartFile avatarFile) throws IOException {
         Student student = studentService.getStudent(studentId);
         Path filePath = Path.of(avatarsDir,
                 studentId + "." + getExtensions(Objects.requireNonNull(avatarFile.getOriginalFilename())));
@@ -49,7 +49,8 @@ public class AvatarService {
         avatar.setFileSize(avatarFile.getSize());
         avatar.setMediaType(avatarFile.getContentType());
         avatar.setData(avatarFile.getBytes());
-        avatars.save(avatar);
+        Avatar saved = avatars.save(avatar);
+        return saved.getId();
     }
 
     public Avatar findAvatarOrNew(Long studentId) {
