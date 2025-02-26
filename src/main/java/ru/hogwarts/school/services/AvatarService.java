@@ -16,21 +16,20 @@ import java.nio.file.StandardOpenOption;
 
 @Service
 public class AvatarService {
-    @Value(value = "${path.to.avatars}")
-    private String avatarDirectory;
-
     private final AvatarRepository avatarRepository;
     private final StudentService studentService;
+    @Value(value = "${path.to.avatars}")
+    private String avatarDirectory;
 
     public AvatarService(AvatarRepository avatarRepository, StudentService studentService) {
         this.avatarRepository = avatarRepository;
         this.studentService = studentService;
     }
 
-    public Avatar uploadAvatar(Long studentId, @NotNull MultipartFile mFile) throws IOException {
+    public Long uploadAvatar(Long studentId, @NotNull MultipartFile mFile) throws IOException {
         Student student = studentService.getStudent(studentId);
 
-        Path filePath = Path.of(avatarDirectory, studentId+"."+ getExtension(mFile.getOriginalFilename()));
+        Path filePath = Path.of(avatarDirectory, studentId + "." + getExtension(mFile.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
 
@@ -47,12 +46,13 @@ public class AvatarService {
         avatar.setMediaType(mFile.getContentType());
         avatar.setFileSize(mFile.getSize());
         avatar.setData(mFile.getBytes());
+        avatar.setFilePath(filePath.toString());
 
-        return avatarRepository.save(avatar);
+        return avatarRepository.save(avatar).getId();
     }
 
     private String getExtension(String fileName) {
-        return fileName.substring(fileName.lastIndexOf(".")+1);
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
     public Avatar findAvatarOrNew(Long studentId) {
