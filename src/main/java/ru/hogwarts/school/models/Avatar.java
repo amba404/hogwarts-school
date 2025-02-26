@@ -1,7 +1,8 @@
 package ru.hogwarts.school.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -15,24 +16,24 @@ import lombok.*;
 public class Avatar {
     @Id
     @GeneratedValue
-    Long id;
+    private Long id;
 
-    @NotBlank
-    String filePath;
+    @NotEmpty(message = "Путь не может быть пустым")
+    @JsonIgnore
+    private String filePath;
 
-    @NotBlank
-    long fileSize;
+    @NotEmpty
+    private long fileSize;
 
-    @NotBlank
-    String mediaType;
+    @NotEmpty(message = "Тип файла не может быть пустым")
+    private String mediaType;
 
-    @NotBlank
+    @NotEmpty
     @Lob
-    byte[] data;
+    @JsonIgnore
+    private byte[] data;
 
     @NotNull
     @OneToOne
-    Student student;
-
-
+    private Student student;
 }
