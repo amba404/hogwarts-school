@@ -44,7 +44,7 @@ public class FacultyService {
         }
     }
 
-    public Collection<Faculty> getAllFaculties() {
+    public List<Faculty> getAllFaculties() {
         return faculties.findAll();
     }
 
