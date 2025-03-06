@@ -11,11 +11,13 @@ import org.mockito.quality.Strictness;
 import ru.hogwarts.school.exceptions.NotFoundException;
 import ru.hogwarts.school.models.Faculty;
 import ru.hogwarts.school.models.Student;
+import ru.hogwarts.school.repositories.FacultyRepository;
 import ru.hogwarts.school.repositories.StudentRepository;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -27,14 +29,24 @@ public class StudentServiceTest {
     private final Long notFoundId = 111111L;
     @Mock
     private StudentRepository studentRepository;
-    @InjectMocks
+    @Mock
+    private FacultyRepository faculties;
+//    @Mock
+    private FacultyService facultyService ;
+//    @InjectMocks
     private StudentService studentService;
     private Student student1, student2;
+    private Faculty faculty1, faculty2;
 
     @BeforeEach
     void setUp() {
-        student1 = new Student(1L, "Ivan", 10, new Faculty(1L, "Name", "color", null));
-        student2 = new Student(2L, "Petr", 10, new Faculty(2L, "Name", "color", null));
+        facultyService = new FacultyService(faculties);
+        studentService = new StudentService(studentRepository, facultyService);
+
+        faculty1 = new Faculty(1L, "Name", "color", Set.of());
+        faculty2 = new Faculty(2L, "Name", "color", Set.of());
+        student1 = new Student(1L, "Ivan", 10, faculty1);
+        student2 = new Student(2L, "Petr", 10, faculty2);
 
         when(studentRepository.findById(1L)).thenReturn(Optional.of(student1));
         when(studentRepository.findById(2L)).thenReturn(Optional.of(student2));
@@ -45,6 +57,11 @@ public class StudentServiceTest {
         when(studentRepository.save(student2)).thenReturn(student2);
         when(studentRepository.findAll()).thenReturn(List.of(student1, student2));
         when(studentRepository.findByAge(10)).thenReturn(List.of(student1, student2));
+
+        when(faculties.findById(1L)).thenReturn(Optional.of(faculty1));
+        when(faculties.findById(2L)).thenReturn(Optional.of(faculty2));
+        when(faculties.existsById(1L)).thenReturn(true);
+        when(faculties.existsById(2L)).thenReturn(true);
 
     }
 
