@@ -19,6 +19,7 @@ public class StudentService {
     }
 
     public Student addStudent(Student student) {
+        student.setId(null);
         reSetFaculty(student);
         return students.save(student);
     }

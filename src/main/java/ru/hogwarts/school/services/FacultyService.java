@@ -19,6 +19,7 @@ public class FacultyService {
 
 
     public Faculty addFaculty(Faculty faculty) {
+        faculty.setId(null);
         return faculties.save(faculty);
     }
 
@@ -44,7 +45,7 @@ public class FacultyService {
         }
     }
 
-    public Collection<Faculty> getAllFaculties() {
+    public List<Faculty> getAllFaculties() {
         return faculties.findAll();
     }
 
