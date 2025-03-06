@@ -136,13 +136,31 @@ public class FacultyServiceTest {
         Faculty faculty2 = new Faculty();
         faculty2.setColor("red");
 
-        when(facultyRepository.findByColor("red")).thenReturn(List.of(faculty1, faculty2));
+        when(facultyRepository.findByColorIgnoreCase("red")).thenReturn(List.of(faculty1, faculty2));
 
         List<Faculty> facultiesByColor = facultyService.findFacultiesByColor("red");
 
         assertNotNull(facultiesByColor);
         assertEquals(2, facultiesByColor.size());
-        verify(facultyRepository, times(1)).findByColor("red");
+        verify(facultyRepository, times(1)).findByColorIgnoreCase("red");
+    }
+
+    @Test
+    void findFacultiesByName() {
+        Faculty faculty1 = new Faculty();
+        faculty1.setName("faculty");
+
+        when(facultyRepository.findByNameIgnoreCase("faculty")).thenReturn(List.of(faculty1));
+
+        List<Faculty> facultiesByName = facultyService.findFacultiesByName("faculty");
+
+        assertNotNull(facultiesByName);
+        assertEquals(1, facultiesByName.size());
+        verify(facultyRepository, times(1)).findByNameIgnoreCase("faculty");
+    }
+
+    @Test
+    void findFacultyByStudentId() {
     }
 }
 

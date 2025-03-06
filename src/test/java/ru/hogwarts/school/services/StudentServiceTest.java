@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import ru.hogwarts.school.exceptions.NotFoundException;
+import ru.hogwarts.school.models.Faculty;
 import ru.hogwarts.school.models.Student;
 import ru.hogwarts.school.repositories.StudentRepository;
 
@@ -32,8 +33,8 @@ public class StudentServiceTest {
 
     @BeforeEach
     void setUp() {
-        student1 = new Student(1L, "Ivan", 10);
-        student2 = new Student(2L, "Petr", 10);
+        student1 = new Student(1L, "Ivan", 10, new Faculty(1L, "Name", "color", null));
+        student2 = new Student(2L, "Petr", 10, new Faculty(2L, "Name", "color", null));
 
         when(studentRepository.findById(1L)).thenReturn(Optional.of(student1));
         when(studentRepository.findById(2L)).thenReturn(Optional.of(student2));
