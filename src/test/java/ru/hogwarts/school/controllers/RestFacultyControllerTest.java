@@ -21,21 +21,16 @@ import java.util.List;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class RestFacultyControllerTest {
+    final private static long TEST_FACULTY_ID = 1000000L, TEST_FACULTY_ID_FAIL = 99999999L;
+    private static Faculty facultyTest, facultyTestFail;
     @LocalServerPort
     private int port;
-
     @Autowired
     private TestRestTemplate restTemplate;
-
     @Autowired
     private FacultyService facultyService;
-
     @Autowired
     private FacultyController facultyController;
-
-    final private static long TEST_FACULTY_ID = 1000000L, TEST_FACULTY_ID_FAIL = 99999999L;
-
-    private static Faculty facultyTest, facultyTestFail;
 
     @BeforeAll
     public void setup() throws Exception {
@@ -150,7 +145,8 @@ public class RestFacultyControllerTest {
         ResponseEntity<List<Faculty>> facultiesByColor = restTemplate.exchange("http://localhost:" + port + "/faculty/find/color/" + facultyTest.getColor(),
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<Faculty>>(){});
+                new ParameterizedTypeReference<List<Faculty>>() {
+                });
 
         Assertions.assertThat(facultiesByColor.getStatusCode()).isEqualTo(HttpStatus.OK);
         Assertions.assertThat(facultiesByColor.getBody()).isNotEmpty();

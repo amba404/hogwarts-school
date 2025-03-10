@@ -22,21 +22,16 @@ import java.util.List;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class RestStudentControllerTest {
+    final private static long TEST_STUDENT_ID = 1000000L, TEST_STUDENT_ID_FAIL = 99999999L;
+    private static Student studentTest, studentTestFail;
     @LocalServerPort
     private int port;
-
     @Autowired
     private TestRestTemplate restTemplate;
-
     @Autowired
     private StudentService studentService;
-
     @Autowired
     private StudentController studentController;
-
-    final private static long TEST_STUDENT_ID = 1000000L, TEST_STUDENT_ID_FAIL = 99999999L;
-
-    private static Student studentTest, studentTestFail;
 
     @BeforeAll
     public void setup() throws Exception {
@@ -153,7 +148,8 @@ public class RestStudentControllerTest {
         ResponseEntity<List<Student>> studentsByAge = restTemplate.exchange("http://localhost:" + port + "/student/find/age?age=" + studentTest.getAge(),
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<Student>>(){});
+                new ParameterizedTypeReference<List<Student>>() {
+                });
 
         Assertions.assertThat(studentsByAge.getStatusCode()).isEqualTo(HttpStatus.OK);
         Assertions.assertThat(studentsByAge.getBody()).isNotEmpty();

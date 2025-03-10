@@ -5,7 +5,6 @@ import ru.hogwarts.school.exceptions.NotFoundException;
 import ru.hogwarts.school.models.Faculty;
 import ru.hogwarts.school.repositories.FacultyRepository;
 
-import java.util.Collection;
 import java.util.List;
 
 @Service
