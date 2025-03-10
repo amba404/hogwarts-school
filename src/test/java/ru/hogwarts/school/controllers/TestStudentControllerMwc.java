@@ -1,6 +1,7 @@
 package ru.hogwarts.school.controllers;
 
 import net.minidev.json.JSONObject;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,28 +28,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = {StudentController.class, StudentService.class, FacultyService.class})
 public class TestStudentControllerMwc {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockitoBean
-    private StudentRepository studentRepository;
-
-    @MockitoBean
-    private FacultyRepository facultyRepository;
-
-    @MockitoSpyBean
-    private StudentService studentService;
-
-    @MockitoSpyBean
-    private FacultyService facultyService;
-
-    @InjectMocks
-    private StudentController studentController;
-
+    final private static long TEST_ID = 10000000000L, TEST_ID_FAIL = 99999999999L;
     private static Student student1, student2, studentFail;
     private static Faculty faculty1;
-
-    final private static long TEST_ID = 10000000000L, TEST_ID_FAIL = 99999999999L;
+    @Autowired
+    private MockMvc mockMvc;
+    @MockitoBean
+    private StudentRepository studentRepository;
+    @MockitoBean
+    private FacultyRepository facultyRepository;
+    @MockitoSpyBean
+    private StudentService studentService;
+    @MockitoSpyBean
+    private FacultyService facultyService;
+    @InjectMocks
+    private StudentController studentController;
 
     @BeforeAll
     static void init() {
@@ -192,5 +186,38 @@ public class TestStudentControllerMwc {
                 .andExpect(status().isNotFound());
 
         Mockito.verify(studentRepository, Mockito.never()).delete(studentFail);
+    }
+
+    @Test
+    void testGetStudentsCount() throws Exception {
+        Mockito.when(studentRepository.getCountOfStudents()).thenReturn(2);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/student/get/count")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(2));
+    }
+
+    @Test
+    void testGetAvgAgeOfStudents() throws Exception {
+        Mockito.when(studentRepository.getAvgAgeOfStudents()).thenReturn(118);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/student/get/avg-age")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(118));
+    }
+
+    @Test
+    void testGetLastFiveStudents() throws Exception {
+        Mockito.when(studentRepository.getLastFiveStudents()).thenReturn(java.util.List.of(student2, student1));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/student/get/last-five")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", Matchers.hasSize(2)));
     }
 }
