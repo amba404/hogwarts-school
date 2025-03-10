@@ -2,6 +2,7 @@ package ru.hogwarts.school.services;
 
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.exceptions.NotFoundException;
@@ -13,6 +14,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.List;
 
 @Service
 public class AvatarService {
@@ -63,5 +65,10 @@ public class AvatarService {
     public Avatar findAvatarOrFail(Long studentId) {
         return avatarRepository.findByStudentId(studentId)
                 .orElseThrow(() -> new NotFoundException(String.format("Avatar for student %d not found", studentId)));
+    }
+
+    public List<Avatar> getAllPaged(int pageNumber, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
+        return avatarRepository.findAll(pageRequest).getContent();
     }
 }
