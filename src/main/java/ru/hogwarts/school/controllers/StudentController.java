@@ -24,29 +24,29 @@ public class StudentController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Collection<Student>> getAllStudents() {
-        return ResponseEntity.ok(studentService.getAllStudents());
+    public Collection<Student> getAllStudents() {
+        return studentService.getAllStudents();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Student> getStudent(@PathVariable Long id) {
-        return ResponseEntity.ok(studentService.getStudent(id));
+    public Student getStudent(@PathVariable Long id) {
+        return studentService.getStudent(id);
     }
 
     @GetMapping("/{id}/faculty")
-    public ResponseEntity<Faculty> getFaculty(@PathVariable Long id) {
-        return ResponseEntity.ok(studentService.getStudent(id).getFaculty());
+    public Faculty getFaculty(@PathVariable Long id) {
+        return studentService.getStudent(id).getFaculty();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student student) {
+    public Student updateStudent(@PathVariable Long id, @RequestBody Student student) {
         student.setId(id);
-        return ResponseEntity.ok(studentService.updateStudent(student));
+        return studentService.updateStudent(student);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Student> deleteStudent(@PathVariable Long id) {
-        return ResponseEntity.ok(studentService.deleteStudent(id));
+    public Student deleteStudent(@PathVariable Long id) {
+        return studentService.deleteStudent(id);
     }
 
     @GetMapping("/find/age")
@@ -63,7 +63,22 @@ public class StudentController {
     }
 
     @GetMapping("/find/faculty/{id}")
-    public ResponseEntity<Collection<Student>> findStudentsByFacultyId(@PathVariable Long id) {
-        return ResponseEntity.ok(studentService.findStudentsByFacultyId(id));
+    public Collection<Student> findStudentsByFacultyId(@PathVariable Long id) {
+        return studentService.findStudentsByFacultyId(id);
+    }
+
+    @GetMapping("/get/count")
+    public Integer getCountOfStudents() {
+        return studentService.getCountOfStudents();
+    }
+
+    @GetMapping("/get/avg-age")
+    public Integer getAvgAgeOfStudents() {
+        return studentService.getAvgAgeOfStudents();
+    }
+
+    @GetMapping("/get/last-five")
+    public Collection<Student> getLastFiveStudents() {
+        return studentService.getLastFiveStudents();
     }
 }
