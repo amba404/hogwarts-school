@@ -3,7 +3,6 @@ package ru.hogwarts.school.services;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
@@ -31,9 +30,9 @@ public class StudentServiceTest {
     private StudentRepository studentRepository;
     @Mock
     private FacultyRepository faculties;
-//    @Mock
-    private FacultyService facultyService ;
-//    @InjectMocks
+    //    @Mock
+    private FacultyService facultyService;
+    //    @InjectMocks
     private StudentService studentService;
     private Student student1, student2;
     private Faculty faculty1, faculty2;
