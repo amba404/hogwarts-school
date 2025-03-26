@@ -1,8 +1,6 @@
 package ru.hogwarts.school.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.services.InfoService;
 
 @RestController
@@ -18,5 +16,12 @@ public class InfoController {
     @GetMapping("/port")
     public String getPort() {
         return infoService.getPort();
+    }
+
+    @GetMapping("/sum-of-1m/{method}")
+    public Long getSumOf1M_original(@PathVariable String method,
+                                          @RequestParam(defaultValue = "1", required = false) long start,
+                                          @RequestParam(defaultValue = "1000000", required = false) long end) {
+        return infoService.getSumOf1M(method, start, end);
     }
 }
