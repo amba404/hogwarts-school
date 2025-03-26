@@ -94,4 +94,28 @@ public class StudentService {
     public List<Student> getLastFiveStudents() {
         return students.getLastFiveStudents();
     }
+
+    public List<String> getStudentsNamesStartedWith(String letter) {
+        logger.info("getStudentsNamesStartedWith: letter {}", letter);
+
+        final String lambdaLetter = (letter == null ? "" : letter.toUpperCase().trim());
+
+        List<Student> all = students.findAll();
+
+        return all.parallelStream()
+                .map(s -> s.getName().toUpperCase())
+                .filter(s -> s.startsWith(lambdaLetter))
+                .sorted()
+                .toList();
+    }
+
+    public int getStudentsAvgAge() {
+        logger.info("getStudentsAvgAge: get avg age of students");
+
+        List<Student> all = students.findAll();
+
+        return (int)all.parallelStream()
+                .mapToInt(Student::getAge)
+                .summaryStatistics().getAverage();
+    }
 }

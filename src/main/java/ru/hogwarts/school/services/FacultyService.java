@@ -73,4 +73,13 @@ public class FacultyService {
     public List<Faculty> findFacultyByStudentId(Long id) {
         return faculties.findFacultyByStudentsId(id);
     }
+
+    public String getLongestFacultyName() {
+        logger.info("getLongestFacultyName: get longest name of Faculties");
+
+        return faculties.findAll().stream()
+                .map(Faculty::getName)
+                .max(String::compareTo)
+                .orElse("");
+    }
 }
