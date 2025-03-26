@@ -8,6 +8,7 @@ import ru.hogwarts.school.models.Student;
 import ru.hogwarts.school.repositories.StudentRepository;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 @Service
 public class StudentService {
@@ -114,8 +115,41 @@ public class StudentService {
 
         List<Student> all = students.findAll();
 
-        return (int)all.parallelStream()
+        return (int) all.parallelStream()
                 .mapToInt(Student::getAge)
                 .summaryStatistics().getAverage();
+    }
+
+    public void printStudents(Consumer<String> method) {
+        List<Student> all = students.findAll();
+
+        if (all.size() > 1) {
+            method.accept(all.get(0).getName());
+            method.accept(all.get(1).getName());
+        }
+
+        if (all.size() > 3) {
+            new Thread(() -> {
+                method.accept(all.get(2).getName());
+                method.accept(all.get(3).getName());
+            }).start();
+        }
+
+        if (all.size() > 5) {
+            new Thread(() -> {
+                method.accept(all.get(4).getName());
+                method.accept(all.get(5).getName());
+            }).start();
+        }
+    }
+
+    public static void printParallel(String s) {
+        System.out.println(s);
+    }
+
+    public static void printSynchronized(String s) {
+        synchronized (StudentService.class) {
+            System.out.println(s);
+        }
     }
 }

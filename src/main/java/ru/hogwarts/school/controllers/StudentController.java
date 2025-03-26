@@ -93,4 +93,13 @@ public class StudentController {
         return studentService.getStudentsAvgAge();
     }
 
+    @GetMapping("/print-parallel")
+    public void printStudentsParallel() {
+        studentService.printStudents(StudentService::printParallel);
+    }
+
+    @GetMapping("/print-synchronized")
+    public void printStudentsSynchronized() {
+        studentService.printStudents(StudentService::printSynchronized);
+    }
 }
